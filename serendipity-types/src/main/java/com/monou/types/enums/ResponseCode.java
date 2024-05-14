@@ -3,6 +3,12 @@ package com.monou.types.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+/**
+ * @author serendipity
+ * @version 1.0
+ * @date 2024/5/15
+ **/
+
 
 @AllArgsConstructor
 @NoArgsConstructor

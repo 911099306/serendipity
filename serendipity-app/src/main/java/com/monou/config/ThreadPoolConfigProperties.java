@@ -2,7 +2,11 @@ package com.monou.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-
+/**
+ * @author serendipity
+ * @version 1.0
+ * @date 2024/5/15
+ **/
 @Data
 @ConfigurationProperties(prefix = "thread.pool.executor.config", ignoreInvalidFields = true)
 public class ThreadPoolConfigProperties {
@@ -15,7 +19,7 @@ public class ThreadPoolConfigProperties {
     private Long keepAliveTime = 10L;
     /** 最大队列数 */
     private Integer blockQueueSize = 5000;
-    /*
+    /**
      * AbortPolicy：丢弃任务并抛出RejectedExecutionException异常。
      * DiscardPolicy：直接丢弃任务，但是不会抛出异常
      * DiscardOldestPolicy：将最早进入队列的任务删除，之后再尝试加入队列的任务被拒绝

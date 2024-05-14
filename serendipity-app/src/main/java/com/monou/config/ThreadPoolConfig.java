@@ -8,6 +8,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.*;
+/**
+ * @author serendipity
+ * @version 1.0
+ * @date 2024/5/15
+ **/
 
 @Slf4j
 @EnableAsync

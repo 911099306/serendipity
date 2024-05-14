@@ -2,7 +2,11 @@ package com.monou.types.exception;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+/**
+ * @author serendipity
+ * @version 1.0
+ * @date 2024/5/15
+ **/
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AppException extends RuntimeException {
