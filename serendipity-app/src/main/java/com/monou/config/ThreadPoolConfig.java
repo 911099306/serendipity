@@ -13,7 +13,6 @@ import java.util.concurrent.*;
  * @version 1.0
  * @date 2024/5/15
  **/
-
 @Slf4j
 @EnableAsync
 @Configuration

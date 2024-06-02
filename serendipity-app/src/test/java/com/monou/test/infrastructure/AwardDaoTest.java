@@ -1,4 +1,4 @@
-package com.monou.infrastructure;
+package com.monou.test.infrastructure;
 
 import com.alibaba.fastjson.JSON;
 import com.monou.infrastructure.persistent.dao.IAwardDao;
