@@ -1,5 +1,6 @@
 package com.monou.infrastructure.persistent.dao;
 
+import com.monou.domain.strategy.model.entity.StrategyEntity;
 import com.monou.infrastructure.persistent.po.Strategy;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,4 +17,5 @@ public interface IStrategyDao {
 
     List<Strategy> queryStrategyList();
 
+    Strategy queryStrategyEntityByStrategyId(Long strategyId);
 }

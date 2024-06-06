@@ -27,6 +27,11 @@ public enum ResponseCode {
      * 非法参数
      */
     ILLEGAL_PARAMETER("0002", "非法参数"),
+    /**
+     * 业务异常
+     */
+    STRATEGY_RULE_WEIGHT_IS_NULL("ERR_BIZ_001", "业务异常，策略规则中 rule_weight 权重规则已适用但未配置"),
+
     ;
 
     private String code;

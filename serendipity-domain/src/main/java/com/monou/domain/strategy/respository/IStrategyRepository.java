@@ -1,6 +1,8 @@
 package com.monou.domain.strategy.respository;
 
 import com.monou.domain.strategy.model.entity.StrategyAwardEntity;
+import com.monou.domain.strategy.model.entity.StrategyEntity;
+import com.monou.domain.strategy.model.entity.StrategyRuleEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +18,16 @@ public interface IStrategyRepository {
 
     List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId);
 
-    void storeStrategyAwardSearchRateTable(Long strategyId, Integer rateRange, Map<Integer, Integer> strategyAwardSearchRateTable);
+    void storeStrategyAwardSearchRateTable(String key, Integer rateRange, Map<Integer, Integer> strategyAwardSearchRateTable);
 
     int getRateRange(Long strategyId);
 
-    Integer getStrategyAwardAssmble(Long strategyId, int rateKey);
+    int getRateRange(String key);
+
+
+    Integer getStrategyAwardAssmble(String key, int rateKey);
+
+    StrategyEntity queryStrategyEntityByStrategyId(Long strategyId);
+
+    StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 }
