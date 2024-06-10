@@ -32,7 +32,9 @@ public class StrategyArmoryDispatchTest {
 
     @Before
     public void test_strategyArmory(){
-        strategyArmory.assembleLotteryStrategy(100001L);
+        boolean b = strategyArmory.assembleLotteryStrategy(100001L);
+        System.out.println(b);
+
     }
 
     @Test

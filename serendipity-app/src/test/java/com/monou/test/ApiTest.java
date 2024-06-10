@@ -2,6 +2,7 @@ package com.monou.test;
 
 import com.monou.infrastructure.persistent.redis.IRedisService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RMap;
@@ -12,8 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 
 @Slf4j
-@RunWith(SpringRunner.class)
-@SpringBootTest
+// @RunWith(SpringRunner.class)
+// @SpringBootTest
 public class ApiTest {
 
     @Resource
@@ -34,6 +35,16 @@ public class ApiTest {
         map.put(10, 105);
         log.info("测试结果{}",redisService.getFromMap("strategy_id_100001",1).toString());
 
+    }
+
+    @Test
+    public void test_blank() {
+        String s = null;
+        boolean blank = StringUtils.isBlank(s);
+        System.out.println("blank = " + blank);
+        s = "";
+         blank = StringUtils.isBlank(s);
+        System.out.println("blank = " + blank);
     }
 
 }
