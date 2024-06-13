@@ -3,6 +3,7 @@ package com.monou.domain.strategy.respository;
 import com.monou.domain.strategy.model.entity.StrategyAwardEntity;
 import com.monou.domain.strategy.model.entity.StrategyEntity;
 import com.monou.domain.strategy.model.entity.StrategyRuleEntity;
+import com.monou.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,4 +33,9 @@ public interface IStrategyRepository {
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 
     String queryStrategyRuleVale(Long strategyId, Integer awardId, String ruleModel);
+
+    String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
+
+    StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId);
+
 }

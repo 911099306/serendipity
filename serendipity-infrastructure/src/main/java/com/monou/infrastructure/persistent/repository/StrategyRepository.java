@@ -3,6 +3,7 @@ package com.monou.infrastructure.persistent.repository;
 import com.monou.domain.strategy.model.entity.StrategyAwardEntity;
 import com.monou.domain.strategy.model.entity.StrategyEntity;
 import com.monou.domain.strategy.model.entity.StrategyRuleEntity;
+import com.monou.domain.strategy.model.valobj.StrategyAwardRuleModelVO;
 import com.monou.domain.strategy.respository.IStrategyRepository;
 import com.monou.infrastructure.persistent.dao.IStrategyAwardDao;
 import com.monou.infrastructure.persistent.dao.IStrategyDao;
@@ -52,7 +53,12 @@ public class StrategyRepository implements IStrategyRepository {
         strategyAwardEntities = new ArrayList<>(strategyAwards.size());
         // 赋值
         for (StrategyAward strategyAward : strategyAwards) {
-            StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder().strategyId(strategyAward.getStrategyId()).awardId(strategyAward.getAwardId()).awardCount(strategyAward.getAwardCount()).awardCountSurplus(strategyAward.getAwardCountSurplus()).awardRate(strategyAward.getAwardRate()).build();
+            StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
+                    .strategyId(strategyAward.getStrategyId())
+                    .awardId(strategyAward.getAwardId())
+                    .awardCount(strategyAward.getAwardCount())
+                    .awardCountSurplus(strategyAward.getAwardCountSurplus())
+                    .awardRate(strategyAward.getAwardRate()).build();
             strategyAwardEntities.add(strategyAwardEntity);
         }
         redisService.setValue(cacheKey, strategyAwardEntities);
@@ -91,6 +97,8 @@ public class StrategyRepository implements IStrategyRepository {
         String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;
         StrategyEntity strategyEntity = redisService.getValue(cacheKey);
         if (strategyEntity != null) {
+            System.out.println("strategyEntity = " + strategyEntity);
+
             return strategyEntity;
         }
         // 缓存中没有，数据库中查询
@@ -128,5 +136,23 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRule.setAwardId(awardId);
         strategyRule.setRuleModel(ruleModel);
         return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setAwardId(awardId);
+        strategyRule.setRuleModel(ruleModel);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModelVO(Long strategyId, Integer awardId) {
+        StrategyAward strategyAward = new StrategyAward();
+        strategyAward.setStrategyId(strategyId);
+        strategyAward.setAwardId(awardId);
+        String ruleModels = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
+        return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 }
