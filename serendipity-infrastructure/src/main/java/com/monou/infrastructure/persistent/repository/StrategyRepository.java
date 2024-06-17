@@ -97,12 +97,13 @@ public class StrategyRepository implements IStrategyRepository {
         String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;
         StrategyEntity strategyEntity = redisService.getValue(cacheKey);
         if (strategyEntity != null) {
-            System.out.println("strategyEntity = " + strategyEntity);
-
             return strategyEntity;
         }
         // 缓存中没有，数据库中查询
         Strategy strategy = strategyDao.queryStrategyEntityByStrategyId(strategyId);
+        if (null == strategy) {
+            return StrategyEntity.builder().build();
+        }
         strategyEntity = StrategyEntity.builder().strategyId(strategy.getStrategyId()).strategyDesc(strategy.getStrategyDesc()).ruleModels(strategy.getRuleModels()).build();
         // 加入缓存
         redisService.setValue(cacheKey, strategyEntity);
