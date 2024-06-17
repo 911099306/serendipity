@@ -21,18 +21,17 @@ public interface IStrategyRepository {
 
     void storeStrategyAwardSearchRateTable(String key, Integer rateRange, Map<Integer, Integer> strategyAwardSearchRateTable);
 
+    Integer getStrategyAwardAssemble(String key, Integer rateKey);
+
     int getRateRange(Long strategyId);
 
     int getRateRange(String key);
-
-
-    Integer getStrategyAwardAssmble(String key, int rateKey);
 
     StrategyEntity queryStrategyEntityByStrategyId(Long strategyId);
 
     StrategyRuleEntity queryStrategyRule(Long strategyId, String ruleModel);
 
-    String queryStrategyRuleVale(Long strategyId, Integer awardId, String ruleModel);
+    String queryStrategyRuleValue(Long strategyId, String ruleModel);
 
     String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel);
 

@@ -76,6 +76,11 @@ public class StrategyRepository implements IStrategyRepository {
     }
 
     @Override
+    public Integer getStrategyAwardAssemble(String key, Integer rateKey) {
+        return redisService.getFromMap(Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key, rateKey);
+    }
+
+    @Override
     public int getRateRange(Long strategyId) {
         return getRateRange(String.valueOf(strategyId));
     }
@@ -85,11 +90,7 @@ public class StrategyRepository implements IStrategyRepository {
         return redisService.getValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key);
     }
 
-    @Override
-    public Integer getStrategyAwardAssmble(String key, int rateKey) {
-        return redisService.getFromMap(Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key, rateKey);
 
-    }
 
     @Override
     public StrategyEntity queryStrategyEntityByStrategyId(Long strategyId) {
@@ -123,22 +124,25 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRuleReq.setStrategyId(strategyId);
         strategyRuleReq.setRuleModel(ruleModel);
         StrategyRule strategyRuleRes = strategyRuleDao.queryStrategyRule(strategyRuleReq);
-        StrategyRuleEntity strategyRuleEntity = StrategyRuleEntity.builder().strategyId(strategyRuleRes.getStrategyId()).awardId(strategyRuleRes.getAwardId()).ruleType(strategyRuleRes.getRuleType()).ruleModel(strategyRuleRes.getRuleModel()).ruleValue(strategyRuleRes.getRuleValue()).ruleDesc(strategyRuleRes.getRuleDesc()).build();
+        StrategyRuleEntity strategyRuleEntity = StrategyRuleEntity.builder()
+                .strategyId(strategyRuleRes.getStrategyId())
+                .awardId(strategyRuleRes.getAwardId())
+                .ruleType(strategyRuleRes.getRuleType())
+                .ruleModel(strategyRuleRes.getRuleModel())
+                .ruleValue(strategyRuleRes.getRuleValue())
+                .ruleDesc(strategyRuleRes.getRuleDesc())
+                .build();
 
         // 加入缓存
         // redisService.setValue(cacheKey, strategyRuleEntity);
         return strategyRuleEntity;
     }
 
-    @Override
-    public String queryStrategyRuleVale(Long strategyId, Integer awardId, String ruleModel) {
-        StrategyRule strategyRule = new StrategyRule();
-        strategyRule.setStrategyId(strategyId);
-        strategyRule.setAwardId(awardId);
-        strategyRule.setRuleModel(ruleModel);
-        return strategyRuleDao.queryStrategyRuleValue(strategyRule);
-    }
 
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, String ruleModel) {
+        return queryStrategyRuleValue(strategyId, null, ruleModel);
+    }
     @Override
     public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
         StrategyRule strategyRule = new StrategyRule();

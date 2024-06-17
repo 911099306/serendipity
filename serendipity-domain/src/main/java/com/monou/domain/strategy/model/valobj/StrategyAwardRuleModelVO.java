@@ -1,6 +1,6 @@
 package com.monou.domain.strategy.model.valobj;
 
-import com.monou.domain.strategy.service.rule.factory.DefaultLogicFactory;
+import com.monou.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import com.monou.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

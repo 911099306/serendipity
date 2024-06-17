@@ -4,6 +4,7 @@ import com.monou.domain.strategy.model.entity.StrategyAwardEntity;
 import com.monou.domain.strategy.model.entity.StrategyEntity;
 import com.monou.domain.strategy.model.entity.StrategyRuleEntity;
 import com.monou.domain.strategy.respository.IStrategyRepository;
+import com.monou.types.common.Constants;
 import com.monou.types.enums.ResponseCode;
 import com.monou.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -115,15 +116,21 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
         // 分布式部署下，不一定为当前应用做的策略装配，也就是值不一定会保存到本应用，而是分布式应用，所以要从 redis 中获取
         int rateRange = repository.getRateRange(strategyId);
         // 通过生成的随机值，获取概率奖品查找表中结果
-        return repository.getStrategyAwardAssmble(String.valueOf(strategyId), new SecureRandom().nextInt(rateRange));
+        return repository.getStrategyAwardAssemble(String.valueOf(strategyId), new SecureRandom().nextInt(rateRange));
     }
+
 
     @Override
     public Integer getRandomAwardId(Long strategyId, String ruleWeightValue) {
-        String cacheKey = String.valueOf(strategyId).concat("_").concat(ruleWeightValue);
-        // 分布式部署下，不一定为当前应用做的策略装配，也就是值不一定会保存到本应用，而是分布式应用，所以要从 redis 中获取
-        int rateRange = repository.getRateRange(cacheKey);
-        // 通过生成的随机值，获取概率奖品查找表中结果
-        return repository.getStrategyAwardAssmble(cacheKey, new SecureRandom().nextInt(rateRange));
+        String key = String.valueOf(strategyId).concat(Constants.UNDERLINE).concat(ruleWeightValue);
+        return getRandomAwardId(key);
+    }
+
+    @Override
+    public Integer getRandomAwardId(String key) {
+        // 分布式部署下，不一定为当前应用做的策略装配。也就是值不一定会保存到本应用，而是分布式应用，所以需要从 Redis 中获取。
+        int rateRange = repository.getRateRange(key);
+        // 通过生成的随机值，获取概率值奖品查找表的结果
+        return repository.getStrategyAwardAssemble(key, new SecureRandom().nextInt(rateRange));
     }
 }

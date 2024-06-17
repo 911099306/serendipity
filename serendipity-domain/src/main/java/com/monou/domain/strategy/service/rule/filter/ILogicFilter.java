@@ -1,4 +1,4 @@
-package com.monou.domain.strategy.service.rule;
+package com.monou.domain.strategy.service.rule.filter;
 
 import com.monou.domain.strategy.model.entity.RuleActionEntity;
 import com.monou.domain.strategy.model.entity.RuleMatterEntity;
