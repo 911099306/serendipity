@@ -8,7 +8,6 @@ import com.monou.domain.strategy.respository.IStrategyRepository;
 import com.monou.domain.strategy.service.armory.IStrategyDispatch;
 import com.monou.domain.strategy.service.rule.ILogicFilter;
 import com.monou.domain.strategy.service.rule.factory.DefaultLogicFactory;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -37,10 +36,12 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
 
     @Override
     protected RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> doCheckRaffleBeforeLogic(RaffleFactorEntity raffleFactorEntity, String... logics) {
-        if (logics == null || 0 == logics.length) return RuleActionEntity.<RuleActionEntity.RaffleBeforeEntity>builder()
-                .code(RuleLogicCheckTypeVO.ALLOW.getCode())
-                .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
-                .build();
+        if (logics == null ||  logics.length == 0) {
+            return RuleActionEntity.<RuleActionEntity.RaffleBeforeEntity>builder()
+                    .code(RuleLogicCheckTypeVO.ALLOW.getCode())
+                    .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
+                    .build();
+        }
 
         Map<String, ILogicFilter<RuleActionEntity.RaffleBeforeEntity>> logicFilterGroup = logicFactory.openLogicFilter();
 
@@ -89,10 +90,12 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
 
     @Override
     protected RuleActionEntity<RuleActionEntity.RaffleCenterEntity> doCheckRaffleCenterLogic(RaffleFactorEntity raffleFactorEntity, String... logics) {
-        if (logics == null || 0 == logics.length) return RuleActionEntity.<RuleActionEntity.RaffleCenterEntity>builder()
-                .code(RuleLogicCheckTypeVO.ALLOW.getCode())
-                .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
-                .build();
+        if (logics == null || 0 == logics.length) {
+            return RuleActionEntity.<RuleActionEntity.RaffleCenterEntity>builder()
+                    .code(RuleLogicCheckTypeVO.ALLOW.getCode())
+                    .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
+                    .build();
+        }
 
         Map<String, ILogicFilter<RuleActionEntity.RaffleCenterEntity>> logicFilterGroup = logicFactory.openLogicFilter();
 
@@ -107,7 +110,9 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy{
             ruleActionEntity = logicFilter.filter(ruleMatterEntity);
             // 非放行结果则顺序过滤
             log.info("抽奖中规则过滤 userId: {} ruleModel: {} code: {} info: {}", raffleFactorEntity.getUserId(), ruleModel, ruleActionEntity.getCode(), ruleActionEntity.getInfo());
-            if (!RuleLogicCheckTypeVO.ALLOW.getCode().equals(ruleActionEntity.getCode())) return ruleActionEntity;
+            if (!RuleLogicCheckTypeVO.ALLOW.getCode().equals(ruleActionEntity.getCode())) {
+                return ruleActionEntity;
+            }
         }
         return ruleActionEntity;
     }

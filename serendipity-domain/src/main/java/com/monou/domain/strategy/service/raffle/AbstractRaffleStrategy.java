@@ -48,10 +48,13 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         StrategyEntity strategy = repository.queryStrategyEntityByStrategyId(strategyId);
 
         // 3. 抽奖前 - 规则过滤
-        RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionBeforeEntity = this.doCheckRaffleBeforeLogic(RaffleFactorEntity.builder()
-                .userId(userId)
-                .strategyId(strategyId)
-                .build(), strategy.ruleModels());
+        RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> ruleActionBeforeEntity = this.doCheckRaffleBeforeLogic(
+                RaffleFactorEntity.builder()
+                    .userId(userId)
+                    .strategyId(strategyId)
+                    .build(),
+                strategy.ruleModels()
+        );
 
         if (RuleLogicCheckTypeVO.TAKE_OVER.getCode().equals(ruleActionBeforeEntity.getCode())) {
             if (DefaultLogicFactory.LogicModel.RULE_BLACKLIST.getCode().equals(ruleActionBeforeEntity.getRuleModel())) {
