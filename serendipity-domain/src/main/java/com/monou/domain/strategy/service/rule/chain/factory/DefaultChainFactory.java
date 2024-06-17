@@ -6,6 +6,7 @@ import com.monou.domain.strategy.service.rule.chain.ILogicChain;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
@@ -14,8 +15,7 @@ import java.util.Map;
  * @description 工厂
  * @date 2024-06-17 22:38
  **/
-@Slf4j
-@Component
+@Service
 @RequiredArgsConstructor
 public class DefaultChainFactory {
 
