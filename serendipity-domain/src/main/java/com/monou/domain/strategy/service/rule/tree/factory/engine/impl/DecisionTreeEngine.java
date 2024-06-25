@@ -7,7 +7,6 @@ import com.monou.domain.strategy.model.valobj.RuleTreeVO;
 import com.monou.domain.strategy.service.rule.tree.ILogicTreeNode;
 import com.monou.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import com.monou.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import com.monou.types.common.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +27,8 @@ public class DecisionTreeEngine  implements IDecisionTreeEngine {
     private final RuleTreeVO ruleTreeVO;
 
     @Override
-    public DefaultTreeFactory.StrategyAwardData process(String userId, Long strategyId, Integer awardId) {
-        DefaultTreeFactory.StrategyAwardData strategyAwardData = null;
+    public DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId) {
+        DefaultTreeFactory.StrategyAwardVO strategyAwardData = null;
 
         // 获取基础信息
         String nextNode = ruleTreeVO.getTreeRootRuleNode();
