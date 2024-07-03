@@ -7,7 +7,7 @@ import com.monou.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
  * @description 抽奖策略规则责任链接口
  * @date 2024-06-17 22:11
  **/
-public interface ILogicChain extends ILogicChainArmory {
+public interface ILogicChain extends ILogicChainArmory, Cloneable {
 
 
     /**
