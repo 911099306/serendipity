@@ -32,6 +32,12 @@ public enum ResponseCode {
      */
     STRATEGY_RULE_WEIGHT_IS_NULL("ERR_BIZ_001", "业务异常，策略规则中 rule_weight 权重规则已适用但未配置"),
 
+    /**
+     * 策略未装配
+     */
+    UN_ASSEMBLED_STRATEGY_ARMORY("ERR_BIZ_002", "抽奖策略配置未装配，请通过IStrategyArmory完成装配"),
+
+
     ;
 
     private String code;
