@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * @date 2024-06-17 22:19
  **/
 @Slf4j
-@Component("default")
+@Component("rule_default")
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class DefaultLogicChain extends AbstractLogicChain {
     @Resource
