@@ -1,4 +1,4 @@
-package com.monou.test.domain;
+package com.monou.test.domain.strategy;
 
 import com.monou.domain.strategy.service.armory.IStrategyArmory;
 import com.monou.domain.strategy.service.armory.IStrategyDispatch;

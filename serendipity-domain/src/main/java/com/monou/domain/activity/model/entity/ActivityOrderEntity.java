@@ -1,22 +1,23 @@
-package com.monou.infrastructure.persistent.po;
+package com.monou.domain.activity.model.entity;
 
+import com.monou.domain.activity.model.objval.OrderStateVO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 /**
  * @author Serendipity
- * @description 抽奖活动单 持久化对象
- * @date 2024-07-14 22:25
- **/
+ * @description 活动参与实体对象
+ * @date 2024-07-15 00:15
+ */
 @Data
-public class RaffleActivityOrder {
-
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ActivityOrderEntity {
 
     /**
      * 用户ID
@@ -66,15 +67,6 @@ public class RaffleActivityOrder {
     /**
      * 订单状态
      */
-    private String state;
+    private OrderStateVO state;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }

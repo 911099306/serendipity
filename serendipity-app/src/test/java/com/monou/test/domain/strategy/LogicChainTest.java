@@ -1,4 +1,4 @@
-package com.monou.test.domain;
+package com.monou.test.domain.strategy;
 
 import com.alibaba.fastjson.JSON;
 import com.monou.domain.strategy.service.armory.IStrategyArmory;
