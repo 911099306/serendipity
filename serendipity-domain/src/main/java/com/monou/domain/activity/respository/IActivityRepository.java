@@ -1,5 +1,6 @@
 package com.monou.domain.activity.respository;
 
+import com.monou.domain.activity.model.aggregate.CreateOrderAggregate;
 import com.monou.domain.activity.model.entity.ActivityCountEntity;
 import com.monou.domain.activity.model.entity.ActivityEntity;
 import com.monou.domain.activity.model.entity.ActivitySkuEntity;
@@ -33,4 +34,11 @@ public interface IActivityRepository {
      * @return 活动次数信息查询
      */
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
+
+    /**
+     * 保存订单对象
+     *
+     * @param createOrderAggregate 聚合对象
+     */
+    void doSaveOrder(CreateOrderAggregate createOrderAggregate);
 }

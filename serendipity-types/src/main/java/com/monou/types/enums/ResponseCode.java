@@ -27,6 +27,11 @@ public enum ResponseCode {
      * 非法参数
      */
     ILLEGAL_PARAMETER("0002", "非法参数"),
+
+    /**
+     * 唯一索引冲突
+     */
+    INDEX_DUP("0003", "唯一索引冲突"),
     /**
      * 业务异常
      */

@@ -17,11 +17,10 @@ import java.util.List;
 public interface IRaffleActivityOrderDao {
 
     /**
-     * 插入数据
+     * 插入活动数据
      *
      * @param raffleActivityOrder 抽奖活动实体
      */
-    @DBRouter(key = "userId")
     void insert(RaffleActivityOrder raffleActivityOrder);
 
     /**
