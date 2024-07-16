@@ -17,4 +17,18 @@ public interface IRaffleActivitySkuDao {
      * @return sku信息
      */
     RaffleActivitySku queryActivitySku(Long sku);
+
+    /**
+     * 扣减sku库存
+     *
+     * @param sku sku
+     */
+    void updateActivitySkuStock(Long sku);
+
+    /**
+     * 库存已消耗完毕，将剩余库存置为0
+     *
+     * @param sku sku
+     */
+    void clearActivitySkuStock(Long sku);
 }

@@ -40,3 +40,5 @@ build/
 /.idea/
 data
 data/
+
+/docs/dev-ops/log/

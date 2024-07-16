@@ -2,6 +2,7 @@ package com.monou.domain.activity.service;
 
 import com.monou.domain.activity.model.aggregate.CreateOrderAggregate;
 import com.monou.domain.activity.model.entity.*;
+import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
 import com.monou.domain.activity.model.objval.OrderStateVO;
 import com.monou.domain.activity.respository.IActivityRepository;
 import com.monou.domain.activity.service.rule.factory.DefaultActivityChainFactory;
@@ -16,7 +17,7 @@ import java.util.Date;
  * @date 2024-07-15 00:59
  **/
 @Service
-public class RaffleActivityService extends AbstractRaffleActivity{
+public class RaffleActivityService extends AbstractRaffleActivity implements ISkuStock {
 
     public RaffleActivityService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         super(activityRepository, defaultActivityChainFactory);
@@ -58,5 +59,25 @@ public class RaffleActivityService extends AbstractRaffleActivity{
     @Override
     protected void doSaveOrder(CreateOrderAggregate createOrderAggregate) {
         activityRepository.doSaveOrder(createOrderAggregate);
+    }
+
+    @Override
+    public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {
+        return activityRepository.takeQueueValue();
+    }
+
+    @Override
+    public void clearQueueValue() {
+        activityRepository.clearQueueValue();
+    }
+
+    @Override
+    public void updateActivitySkuStock(Long sku) {
+        activityRepository.updateActivitySkuStock(sku);
+    }
+
+    @Override
+    public void clearActivitySkuStock(Long sku) {
+        activityRepository.clearActivitySkuStock(sku);
     }
 }

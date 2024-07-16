@@ -2,6 +2,8 @@ package com.monou.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
 
+import java.util.concurrent.TimeUnit;
+
 
 /**
  * @author serendipity
@@ -269,5 +271,14 @@ public interface IRedisService {
      * @return 是否成功设置key
      */
     Boolean setNx(String key);
+
+    /**
+     * setNx + 过期时间
+     * @param key key
+     * @param expired 过期时间
+     * @param timeUnit 时间单位
+     * @return 是否成功
+     */
+    Boolean setNx(String key, long expired, TimeUnit timeUnit);
 
 }
