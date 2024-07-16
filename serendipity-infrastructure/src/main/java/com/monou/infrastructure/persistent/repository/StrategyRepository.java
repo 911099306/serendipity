@@ -153,7 +153,9 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRuleReq.setStrategyId(strategyId);
         strategyRuleReq.setRuleModel(ruleModel);
         StrategyRule strategyRuleRes = strategyRuleDao.queryStrategyRule(strategyRuleReq);
-        if (strategyRuleRes == null) return null;
+        if (strategyRuleRes == null) {
+            return null;
+        }
         StrategyRuleEntity strategyRuleEntity = StrategyRuleEntity.builder()
                 .strategyId(strategyRuleRes.getStrategyId())
                 .awardId(strategyRuleRes.getAwardId())
@@ -188,7 +190,9 @@ public class StrategyRepository implements IStrategyRepository {
         strategyAward.setStrategyId(strategyId);
         strategyAward.setAwardId(awardId);
         String ruleModels = strategyAwardDao.queryStrategyAwardRuleModels(strategyAward);
-        if (ruleModels == null) return null;
+        if (ruleModels == null) {
+            return null;
+        }
         return StrategyAwardRuleModelVO.builder().ruleModels(ruleModels).build();
     }
 
@@ -197,7 +201,9 @@ public class StrategyRepository implements IStrategyRepository {
         // 优先从缓存获取
         String cacheKey = Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
         RuleTreeVO ruleTreeVOCache = redisService.getValue(cacheKey);
-        if (null != ruleTreeVOCache) return ruleTreeVOCache;
+        if (null != ruleTreeVOCache) {
+            return ruleTreeVOCache;
+        }
 
         // 从数据库获取
         RuleTree ruleTree = ruleTreeDao.queryRuleTreeByTreeId(treeId);
@@ -246,7 +252,9 @@ public class StrategyRepository implements IStrategyRepository {
     }
     @Override
     public void cacheStrategyAwardCount(String cacheKey, Integer awardCount) {
-        if (redisService.isExists(cacheKey)) return;
+        if (redisService.isExists(cacheKey)) {
+            return;
+        }
         redisService.setAtomicLong(cacheKey, awardCount);
     }
 
