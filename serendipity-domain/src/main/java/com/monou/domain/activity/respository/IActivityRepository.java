@@ -1,9 +1,8 @@
 package com.monou.domain.activity.respository;
 
-import com.monou.domain.activity.model.aggregate.CreateOrderAggregate;
-import com.monou.domain.activity.model.entity.ActivityCountEntity;
-import com.monou.domain.activity.model.entity.ActivityEntity;
-import com.monou.domain.activity.model.entity.ActivitySkuEntity;
+import com.monou.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
+import com.monou.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import com.monou.domain.activity.model.entity.*;
 import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
 
 import java.util.Date;
@@ -44,7 +43,7 @@ public interface IActivityRepository {
      *
      * @param createOrderAggregate 聚合对象
      */
-    void doSaveOrder(CreateOrderAggregate createOrderAggregate);
+    void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate);
 
     /**
      * 保存sku 库存进redis
@@ -96,4 +95,48 @@ public interface IActivityRepository {
      * @param sku sku
      */
     void clearActivitySkuStock(Long sku);
+
+
+    /**
+     * 查询未被使用的订单信息
+     *
+     * @param partakeRaffleActivityEntity 参与抽奖活动实体对象
+     * @return 未被使用的订单
+     */
+    UserRaffleOrderEntity queryNoUsedRaffleOrder(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
+
+    /**
+     * 查询总账户总额度
+     *
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @return 账户额度记录
+     */
+    ActivityAccountEntity queryActivityAccountByUserId(String userId, Long activityId);
+
+    /**
+     * 查询月账户额度信息
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @param month 月份
+     * @return 月额度信息
+     */
+    ActivityAccountMonthEntity queryActivityAccountMonthByUserId(String userId, Long activityId, String month);
+
+    /**
+     * 查询日账户额度信息
+     * @param userId 用户ID
+     * @param activityId 活动ID
+     * @param day 日
+     * @return 日额度信息
+     */
+    ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day);
+
+    /**
+     * 保存抽奖单聚合实体对象
+     *
+     * @param createPartakeOrderAggregate 抽奖单聚合实体对象
+     */
+    void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
 }

@@ -1,4 +1,4 @@
-package com.monou.domain.activity.service.rule;
+package com.monou.domain.activity.service.quota.rule;
 
 /**
  * @author Serendipity

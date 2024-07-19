@@ -1,14 +1,12 @@
-package com.monou.domain.activity.service.rule.impl;
+package com.monou.domain.activity.service.quota.rule.impl;
 
 import com.monou.domain.activity.model.entity.ActivityCountEntity;
 import com.monou.domain.activity.model.entity.ActivityEntity;
 import com.monou.domain.activity.model.entity.ActivitySkuEntity;
 import com.monou.domain.activity.model.objval.ActivityStateVO;
-import com.monou.domain.activity.service.rule.AbstractActionChain;
+import com.monou.domain.activity.service.quota.rule.AbstractActionChain;
 import com.monou.types.enums.ResponseCode;
 import com.monou.types.exception.AppException;
-import com.monou.types.model.Response;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

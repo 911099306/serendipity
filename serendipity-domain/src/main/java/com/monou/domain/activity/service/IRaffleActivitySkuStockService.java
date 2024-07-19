@@ -7,7 +7,7 @@ import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
  * @description 活动sku库存处理接口
  * @date 2024-07-17 00:28
  **/
-public interface ISkuStock {
+public interface IRaffleActivitySkuStockService {
 
     /**
      * 获取活动sku库存消耗队列

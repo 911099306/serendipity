@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOrderAggregate {
+public class CreateQuotaOrderAggregate {
 
     /**
      * 用户ID
@@ -28,17 +28,17 @@ public class CreateOrderAggregate {
     private Long activityId;
 
     /**
-     * 增加:总次数
+     * 增加；总次数
      */
     private Integer totalCount;
 
     /**
-     * 增加:日次数
+     * 增加；日次数
      */
     private Integer dayCount;
 
     /**
-     * 增加:月次数
+     * 增加；月次数
      */
     private Integer monthCount;
 

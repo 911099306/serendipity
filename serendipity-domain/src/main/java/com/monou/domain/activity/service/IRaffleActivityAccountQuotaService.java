@@ -9,7 +9,7 @@ import com.monou.domain.activity.model.entity.SkuRechargeEntity;
  * @description 抽奖活动订单接口
  * @date 2024-07-15 00:47
  **/
-public interface IRaffleOrder {
+public interface IRaffleActivityAccountQuotaService {
 
 
     ActivityOrderEntity createRaffleActivityOrder(ActivityShopCartEntity activityShopCartEntity);
@@ -23,5 +23,5 @@ public interface IRaffleOrder {
      * @param skuRechargeEntity 活动商品充值实体对象
      * @return 活动ID
      */
-    String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
+    String createOrder(SkuRechargeEntity skuRechargeEntity);
 }

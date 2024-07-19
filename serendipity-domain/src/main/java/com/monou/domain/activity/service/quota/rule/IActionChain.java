@@ -1,4 +1,4 @@
-package com.monou.domain.activity.service.rule;
+package com.monou.domain.activity.service.quota.rule;
 
 import com.monou.domain.activity.model.entity.ActivityCountEntity;
 import com.monou.domain.activity.model.entity.ActivityEntity;

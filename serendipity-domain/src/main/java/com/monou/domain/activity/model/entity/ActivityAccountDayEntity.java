@@ -7,53 +7,34 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Serendipity
- * @description 活动账户（总）实体对象
- * @date 2024-07-15 00:15
- */
+ * @description 活动账户（日）实体对象
+ * @date 2024-07-19 21:43
+ **/
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityAccountEntity {
+public class ActivityAccountDayEntity {
 
     /**
      * 用户ID
      */
     private String userId;
-
     /**
      * 活动ID
      */
     private Long activityId;
-
     /**
-     * 总次数
+     * 日期（yyyy-mm-dd）
      */
-    private Integer totalCount;
-
-    /**
-     * 总次数-剩余
-     */
-    private Integer totalCountSurplus;
-
+    private String day;
     /**
      * 日次数
      */
     private Integer dayCount;
-
     /**
      * 日次数-剩余
      */
     private Integer dayCountSurplus;
-
-    /**
-     * 月次数
-     */
-    private Integer monthCount;
-
-    /**
-     * 月次数-剩余
-     */
-    private Integer monthCountSurplus;
 
 }

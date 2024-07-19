@@ -1,7 +1,6 @@
-package com.monou.domain.activity.service.rule.factory;
+package com.monou.domain.activity.service.quota.rule.factory;
 
-import com.monou.domain.activity.service.rule.IActionChain;
-import com.monou.domain.activity.service.rule.IActionChainArmory;
+import com.monou.domain.activity.service.quota.rule.IActionChain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;

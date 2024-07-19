@@ -1,7 +1,7 @@
 package com.monou.trigger.job;
 
 import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
-import com.monou.domain.activity.service.ISkuStock;
+import com.monou.domain.activity.service.IRaffleActivitySkuStockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 public class UpdateActivitySkuStockJob {
 
     @Resource
-    private ISkuStock skuStock;
+    private IRaffleActivitySkuStockService skuStock;
 
     @Scheduled(cron = "0/5 * * * * ?")
     public void exec() {
