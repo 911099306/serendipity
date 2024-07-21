@@ -67,6 +67,11 @@ public enum ResponseCode {
      */
     ACCOUNT_DAY_QUOTA_ERROR("ERR_BIZ_008","账户日额度不足"),
 
+    /**
+     * 抽奖单已被使用
+     */
+    ACTIVITY_ORDER_ERROR("ERR_BIZ_009", "用户抽奖单已使用过，不可重复抽奖"),
+
     ;
 
     private String code;

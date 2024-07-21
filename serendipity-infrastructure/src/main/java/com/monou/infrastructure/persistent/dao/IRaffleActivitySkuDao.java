@@ -3,6 +3,8 @@ package com.monou.infrastructure.persistent.dao;
 import com.monou.infrastructure.persistent.po.RaffleActivitySku;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author Serendipity
  * @description 商品sku dao
@@ -31,4 +33,13 @@ public interface IRaffleActivitySkuDao {
      * @param sku sku
      */
     void clearActivitySkuStock(Long sku);
+
+
+    /**
+     * 查询活动sku列表信息
+     * @param activityId 活动id
+     * @return sku列表
+     */
+    List<RaffleActivitySku> queryActivitySkuListByActivityId(Long activityId);
+
 }

@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author Serendipity
- * @description 抽奖奖品列表中每一个奖品得属性，响应对象
- * @date 2024-07-02 23:41
- **/
+ * @description
+ * @date 2024-07-22 00:01
+ */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RaffleAwardListResponse {
+public class ActivityDrawResponseDTO {
 
     /**
      * 奖品ID
@@ -25,11 +25,7 @@ public class RaffleAwardListResponse {
      */
     private String awardTitle;
     /**
-     * 奖品副标题【抽奖1次后解锁】
+     * 排序编号【策略奖品配置的奖品顺序编号】
      */
-    private String awardSubtitle;
-    /**
-     * 排序编号
-     */
-    private Integer sort;
+    private Integer awardIndex;
 }

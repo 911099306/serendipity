@@ -1,9 +1,9 @@
 package com.monou.trigger.api;
 
-import com.monou.trigger.api.dto.RaffleAwardListRequest;
-import com.monou.trigger.api.dto.RaffleAwardListResponse;
-import com.monou.trigger.api.dto.RaffleRequest;
-import com.monou.trigger.api.dto.RaffleResponse;
+import com.monou.trigger.api.dto.RaffleAwardListRequestDTO;
+import com.monou.trigger.api.dto.RaffleAwardListResponseDTO;
+import com.monou.trigger.api.dto.RaffleStrategyRequestDTO;
+import com.monou.trigger.api.dto.RaffleStrategyResponseDTO;
 import com.monou.types.model.Response;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @description 抽奖服务接口
  * @date 2024-07-02 23:37
  **/
-public interface IRaffleService {
+public interface IRaffleStrategyService {
 
     /**
      * 策略装配接口
@@ -30,7 +30,7 @@ public interface IRaffleService {
      * @param request 抽奖奖品列表查询请求参数
      * @return 奖品列表
      */
-    Response<List<RaffleAwardListResponse>> queryRaffleAwardList(RaffleAwardListRequest request);
+    Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(RaffleAwardListRequestDTO request);
 
 
     /**
@@ -39,5 +39,5 @@ public interface IRaffleService {
      * @param request 随机抽奖接口请求参数
      * @return 抽奖奖品
      */
-    Response<RaffleResponse> randomRaffle(RaffleRequest request);
+    Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO request);
 }

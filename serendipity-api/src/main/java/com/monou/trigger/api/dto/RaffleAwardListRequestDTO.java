@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleAwardListRequest {
+public class RaffleAwardListRequestDTO {
 
     /**
      * 抽奖策略ID

@@ -7,11 +7,11 @@ import com.monou.domain.strategy.model.entity.StrategyAwardEntity;
 import com.monou.domain.strategy.service.IRaffleAward;
 import com.monou.domain.strategy.service.IRaffleStrategy;
 import com.monou.domain.strategy.service.armory.IStrategyArmory;
-import com.monou.trigger.api.IRaffleService;
-import com.monou.trigger.api.dto.RaffleAwardListRequest;
-import com.monou.trigger.api.dto.RaffleAwardListResponse;
-import com.monou.trigger.api.dto.RaffleRequest;
-import com.monou.trigger.api.dto.RaffleResponse;
+import com.monou.trigger.api.IRaffleStrategyService;
+import com.monou.trigger.api.dto.RaffleAwardListRequestDTO;
+import com.monou.trigger.api.dto.RaffleAwardListResponseDTO;
+import com.monou.trigger.api.dto.RaffleStrategyRequestDTO;
+import com.monou.trigger.api.dto.RaffleStrategyResponseDTO;
 import com.monou.types.enums.ResponseCode;
 import com.monou.types.exception.AppException;
 import com.monou.types.model.Response;
@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +31,8 @@ import java.util.stream.Collectors;
 @RestController()
 @RequiredArgsConstructor
 @CrossOrigin("${app.config.cross-origin}")
-@RequestMapping("/api/${app.config.api-version}/raffle/")
-public class RaffleController implements IRaffleService {
+@RequestMapping("/api/${app.config.api-version}/raffle/strategy/")
+public class RaffleStrategyController implements IRaffleStrategyService {
 
     private final IStrategyArmory strategyArmory;
     private final IRaffleAward raffleAward;
@@ -79,12 +78,12 @@ public class RaffleController implements IRaffleService {
      */
     @Override
     @RequestMapping(value = "query_raffle_award_list", method = RequestMethod.POST)
-    public Response<List<RaffleAwardListResponse>> queryRaffleAwardList(@RequestBody RaffleAwardListRequest request) {
+    public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
         try {
             log.info("RaffleController.queryRaffleAwardList 查询奖品列表... strategyId:{} ", request.getStrategyId());
 
             List<StrategyAwardEntity> awardEntityList = raffleAward.queryRaffleStrategyAwardList(request.getStrategyId());
-            List<RaffleAwardListResponse> raffleAwardList = awardEntityList.stream().map(award -> RaffleAwardListResponse.builder()
+            List<RaffleAwardListResponseDTO> raffleAwardList = awardEntityList.stream().map(award -> RaffleAwardListResponseDTO.builder()
                             .awardId(award.getAwardId())
                             .awardTitle(award.getAwardTitle())
                             .awardSubtitle(award.getAwardSubtitle())
@@ -92,7 +91,7 @@ public class RaffleController implements IRaffleService {
                             .build())
                     .collect(Collectors.toList());
 
-            return Response.<List<RaffleAwardListResponse>>builder()
+            return Response.<List<RaffleAwardListResponseDTO>>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())
                     .data(raffleAwardList)
@@ -100,7 +99,7 @@ public class RaffleController implements IRaffleService {
 
         } catch (Exception e) {
             log.info("RaffleController.queryRaffleAwardList 查询奖品列表失败... strategyId:{} ", request.getStrategyId());
-            return Response.<List<RaffleAwardListResponse>>builder()
+            return Response.<List<RaffleAwardListResponseDTO>>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
@@ -116,7 +115,7 @@ public class RaffleController implements IRaffleService {
      */
     @Override
     @RequestMapping(value = "random_raffle", method = RequestMethod.POST)
-    public Response<RaffleResponse> randomRaffle(@RequestBody RaffleRequest request) {
+    public Response<RaffleStrategyResponseDTO> randomRaffle(@RequestBody RaffleStrategyRequestDTO request) {
 
         try {
             log.info("RaffleController.randomRaffle 随机抽奖开始 strategyId: {}", request.getStrategyId());
@@ -126,10 +125,10 @@ public class RaffleController implements IRaffleService {
                     .strategyId(request.getStrategyId())
                     .build());
             // 封装返回结果
-            Response<RaffleResponse> response = Response.<RaffleResponse>builder()
+            Response<RaffleStrategyResponseDTO> response = Response.<RaffleStrategyResponseDTO>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())
-                    .data(RaffleResponse.builder()
+                    .data(RaffleStrategyResponseDTO.builder()
                             .awardId(raffleAwardEntity.getAwardId())
                             .awardIndex(raffleAwardEntity.getSort())
                             .build())
@@ -138,13 +137,13 @@ public class RaffleController implements IRaffleService {
             return response;
         } catch (AppException e) {
             log.error("RaffleController.randomRaffle 随机抽奖失败 strategyId：{} {}", request.getStrategyId(), e.getInfo());
-            return Response.<RaffleResponse>builder()
+            return Response.<RaffleStrategyResponseDTO>builder()
                     .code(e.getCode())
                     .info(e.getInfo())
                     .build();
         } catch (Exception e) {
             log.error("RaffleController.randomRaffle 随机抽奖失败 strategyId：{}", request.getStrategyId(), e);
-            return Response.<RaffleResponse>builder()
+            return Response.<RaffleStrategyResponseDTO>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();

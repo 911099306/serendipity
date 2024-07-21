@@ -6,6 +6,7 @@ import com.monou.domain.activity.model.entity.*;
 import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Serendipity
@@ -138,5 +139,12 @@ public interface IActivityRepository {
      * @param createPartakeOrderAggregate 抽奖单聚合实体对象
      */
     void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
+    /**
+     * 根据活动id查询活动Sku信息列表
+     * @param activityId 活动id
+     * @return 活动ksu列表
+     */
+    List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 
 }

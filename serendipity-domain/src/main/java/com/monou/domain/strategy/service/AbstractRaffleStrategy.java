@@ -47,7 +47,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         // 1. 参数校验
         String userId = raffleFactorEntity.getUserId();
         Long strategyId = raffleFactorEntity.getStrategyId();
-        if (null == strategyId || StringUtils.isBlank(userId)) {
+        if (strategyId == null || StringUtils.isBlank(userId)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
         }
 
@@ -73,6 +73,7 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
         StrategyAwardEntity strategyAward = repository.queryStrategyAwardEntity(strategyId, awardId);
         return RaffleAwardEntity.builder()
                 .awardId(awardId)
+                .awardTitle(strategyAward.getAwardTitle())
                 .awardConfig(awardConfig)
                 .sort(strategyAward.getSort())
                 .build();
