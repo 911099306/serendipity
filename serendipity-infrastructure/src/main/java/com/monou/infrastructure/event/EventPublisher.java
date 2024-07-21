@@ -30,4 +30,20 @@ public class EventPublisher {
             throw e;
         }
     }
+
+    /**
+     * 写入中奖记录和任务补偿发送MQ
+     * @param topic 主题
+     * @param eventMessageJSON 发送消息
+     */
+    public void publish(String topic, String eventMessageJSON){
+        try {
+            rabbitTemplate.convertAndSend(topic, eventMessageJSON);
+            log.info("发送MQ消息 topic:{} message:{}", topic, eventMessageJSON);
+        } catch (Exception e) {
+            log.error("发送MQ消息失败 topic:{} message:{}", topic, eventMessageJSON, e);
+            throw e;
+        }
+    }
+
 }
