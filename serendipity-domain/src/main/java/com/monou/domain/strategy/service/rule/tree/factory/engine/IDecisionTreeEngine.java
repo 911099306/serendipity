@@ -2,6 +2,8 @@ package com.monou.domain.strategy.service.rule.tree.factory.engine;
 
 import com.monou.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 
+import java.util.Date;
+
 /**
  * @author Serendipity
  * @description 引擎接口规则树组合接口
@@ -9,6 +11,6 @@ import com.monou.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
  **/
 public interface IDecisionTreeEngine {
 
-    DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId);
+    DefaultTreeFactory.StrategyAwardVO process(String userId, Long strategyId, Integer awardId, Date endDateTime);
 
 }

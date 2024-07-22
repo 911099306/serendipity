@@ -147,4 +147,15 @@ public interface IActivityRepository {
      */
     List<ActivitySkuEntity> queryActivitySkuListByActivityId(Long activityId);
 
+
+    /**
+     * 查询当前用户在当前活动今天抽奖几次
+     *
+     * @param activityId 活动ID
+     * @param userId 用户ID
+     * @return 抽奖次数
+     */
+    Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
+
+
 }

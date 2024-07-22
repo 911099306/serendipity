@@ -1,6 +1,8 @@
 package com.monou.test;
 
+import com.alibaba.fastjson2.JSON;
 import com.monou.infrastructure.persistent.redis.IRedisService;
+import com.monou.trigger.api.dto.RaffleAwardListRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
@@ -17,34 +19,23 @@ import javax.annotation.Resource;
 // @SpringBootTest
 public class ApiTest {
 
-    @Resource
-    private IRedisService redisService;
 
     @Test
     public void test() {
-        RMap<Object, Object>  map = redisService.getMap("strategy_id_100001");
-        map.put(1, 101);
-        map.put(2, 101);
-        map.put(3, 101);
-        map.put(4, 102);
-        map.put(5, 102);
-        map.put(6, 102);
-        map.put(7, 103);
-        map.put(8, 103);
-        map.put(9, 104);
-        map.put(10, 105);
-        log.info("测试结果{}",redisService.getFromMap("strategy_id_100001",1).toString());
-
+        RaffleAwardListRequestDTO requestDTO = new RaffleAwardListRequestDTO();
+        requestDTO.setUserId("xiaofuge");
+        requestDTO.setActivityId(100301L);
+        log.info(JSON.toJSONString(requestDTO));
     }
 
-    @Test
-    public void test_blank() {
-        String s = null;
-        boolean blank = StringUtils.isBlank(s);
-        System.out.println("blank = " + blank);
-        s = "";
-         blank = StringUtils.isBlank(s);
-        System.out.println("blank = " + blank);
+    private double convert(double min){
+        double current = min;
+        double max = 1;
+        while (current < 1){
+            current = current * 10;
+            max = max * 10;
+        }
+        return max;
     }
 
 }

@@ -33,5 +33,12 @@ public interface IRaffleActivityAccountDayDao {
      */
     void insertActivityAccountDay(RaffleActivityAccountDay raffleActivityAccountDay);
 
+    /**
+     * 查询当天查询次数
+     * @param raffleActivityAccountDay 当前信息
+     * @return 查询次数
+     */
+    @DBRouter
+    Integer queryRaffleActivityAccountDayPartakeCount(RaffleActivityAccountDay raffleActivityAccountDay);
 
 }
