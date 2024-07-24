@@ -54,7 +54,7 @@ public class SendRebateMessageEvent extends BaseEvent<SendRebateMessageEvent.Reb
          */
         private String rebateType;
         /**
-         * 返利配置
+         * 返利配置 sku
          */
         private String rebateConfig;
         /**
