@@ -1,6 +1,7 @@
 package com.monou.domain.rebate.repository;
 
 import com.monou.domain.rebate.model.aggregate.BehaviorRebateAggregate;
+import com.monou.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 import com.monou.domain.rebate.model.valobj.BehaviorTypeVO;
 import com.monou.domain.rebate.model.valobj.DailyBehaviorRebateVO;
 
@@ -28,5 +29,8 @@ public interface IBehaviorRebateRepository {
      * @param behaviorRebateAggregates 返利流对象
      */
     void saveUserRebateRecord(String userId, List<BehaviorRebateAggregate> behaviorRebateAggregates);
+
+    List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo);
+
 
 }
