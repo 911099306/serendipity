@@ -22,15 +22,26 @@ public interface ITaskDao {
     void insert(Task task);
 
     /**
-     * 更新task记录状态
+     * 更新task任务状态完成
+     *
      * @param task task状态
      */
     @DBRouter
     void updateTaskSendMessageCompleted(Task task);
 
+    /**
+     * 更新任务状态失败
+     *
+     * @param task 任务
+     */
     @DBRouter
     void updateTaskSendMessageFail(Task task);
 
+    /**
+     * 查询task表示未发送MQ消息的记录
+     *
+     * @return 所有未发送MQ消息的记录
+     */
     List<Task> queryNoSendMessageTaskList();
 
 }
