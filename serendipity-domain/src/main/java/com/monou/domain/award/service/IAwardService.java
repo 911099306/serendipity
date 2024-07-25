@@ -1,5 +1,6 @@
 package com.monou.domain.award.service;
 
+import com.monou.domain.award.model.entity.DistributeAwardEntity;
 import com.monou.domain.award.model.entity.UserAwardRecordEntity;
 
 /**
@@ -14,5 +15,10 @@ public interface IAwardService {
      * @param userAwardRecordEntity 用户抽奖实体记录
      */
     void saveUserAwardRecord(UserAwardRecordEntity userAwardRecordEntity);
+
+    /**
+     * 配送发货奖品
+     */
+    void distributeAward(DistributeAwardEntity distributeAwardEntity);
 
 }
