@@ -30,6 +30,13 @@ public interface IBehaviorRebateRepository {
      */
     void saveUserRebateRecord(String userId, List<BehaviorRebateAggregate> behaviorRebateAggregates);
 
+    /**
+     * 根据用户 和 外部单号，查询返利订单
+     *
+     * @param userId 用户id
+     * @param outBusinessNo 外部单号
+     * @return 返利订单列表
+     */
     List<BehaviorRebateOrderEntity> queryOrderByOutBusinessNo(String userId, String outBusinessNo);
 
 

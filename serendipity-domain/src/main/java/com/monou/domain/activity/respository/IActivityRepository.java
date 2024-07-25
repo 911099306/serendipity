@@ -109,7 +109,7 @@ public interface IActivityRepository {
     /**
      * 查询总账户总额度
      *
-     * @param userId 用户ID
+     * @param userId     用户ID
      * @param activityId 活动ID
      * @return 账户额度记录
      */
@@ -117,18 +117,20 @@ public interface IActivityRepository {
 
     /**
      * 查询月账户额度信息
-     * @param userId 用户ID
+     *
+     * @param userId     用户ID
      * @param activityId 活动ID
-     * @param month 月份
+     * @param month      月份
      * @return 月额度信息
      */
     ActivityAccountMonthEntity queryActivityAccountMonthByUserId(String userId, Long activityId, String month);
 
     /**
      * 查询日账户额度信息
-     * @param userId 用户ID
+     *
+     * @param userId     用户ID
      * @param activityId 活动ID
-     * @param day 日
+     * @param day        日
      * @return 日额度信息
      */
     ActivityAccountDayEntity queryActivityAccountDayByUserId(String userId, Long activityId, String day);
@@ -142,6 +144,7 @@ public interface IActivityRepository {
 
     /**
      * 根据活动id查询活动Sku信息列表
+     *
      * @param activityId 活动id
      * @return 活动ksu列表
      */
@@ -152,7 +155,7 @@ public interface IActivityRepository {
      * 查询当前用户在当前活动今天抽奖几次
      *
      * @param activityId 活动ID
-     * @param userId 用户ID
+     * @param userId     用户ID
      * @return 抽奖次数
      */
     Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
@@ -160,8 +163,14 @@ public interface IActivityRepository {
 
     ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId);
 
+    /**
+     * 查询在该活动下用户已抽奖总数
+     *
+     * @param activityId 活动ID
+     * @param userId     用户ID
+     * @return 抽奖次数
+     */
     Integer queryRaffleActivityAccountPartakeCount(Long activityId, String userId);
-
 
 
 }

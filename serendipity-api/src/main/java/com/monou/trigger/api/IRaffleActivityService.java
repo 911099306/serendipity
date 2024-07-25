@@ -47,12 +47,11 @@ public interface IRaffleActivityService {
     Response<Boolean> isCalendarSignRebate(String userId);
 
     /**
-     * 查询用户活动账户
+     * 查询用户活动账户余额
      *
      * @param request 请求对象「活动ID、用户ID」
      * @return 返回结果「总额度、月额度、日额度」
      */
     Response<UserActivityAccountResponseDTO> queryUserActivityAccount(UserActivityAccountRequestDTO request);
-
 
 }

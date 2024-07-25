@@ -122,7 +122,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                         .sort(strategyAward.getSort())
                         .awardRuleLockCount(awardRuleLockCount)
                         .isAwardUnlock(awardRuleLockCount == null || dayPartakeCount >= awardRuleLockCount)
-                        .waitUnLockCount( (awardRuleLockCount == null|| awardRuleLockCount <= dayPartakeCount) ? 0 : awardRuleLockCount - dayPartakeCount)
+                        .waitUnLockCount((awardRuleLockCount == null || awardRuleLockCount <= dayPartakeCount) ? 0 : awardRuleLockCount - dayPartakeCount)
                         .build());
             }
             Response<List<RaffleAwardListResponseDTO>> response = Response.<List<RaffleAwardListResponseDTO>>builder()
@@ -133,7 +133,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
             log.info("查询抽奖奖品列表配置完成 userId:{} activityId：{} response: {}", request.getUserId(), request.getActivityId(), JSON.toJSONString(response));
             // 返回结果
             return response;
-        } catch (AppException e){
+        } catch (AppException e) {
             log.error("查询抽奖奖品列表配置失败 userId:{} activityId：{}", request.getUserId(), request.getActivityId(), e);
             return Response.<List<RaffleAwardListResponseDTO>>builder()
                     .code(e.getCode())
@@ -165,11 +165,12 @@ public class RaffleStrategyController implements IRaffleStrategyService {
         try {
             log.info("查询抽奖策略权重规则配置开始 userId:{} activityId：{}", request.getUserId(), request.getActivityId());
             // 1. 参数校验
-            if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+            if (StringUtils.isBlank(request.getUserId()) || request.getActivityId() == null) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
             }
             // 2. 查询用户抽奖总次数
             Integer userActivityAccountTotalUseCount = raffleActivityAccountQuotaService.queryRaffleActivityAccountPartakeCount(request.getActivityId(), request.getUserId());
+
             // 3. 查询规则
             List<RaffleStrategyRuleWeightResponseDTO> raffleStrategyRuleWeightList = new ArrayList<>();
             List<RuleWeightVO> ruleWeightVOList = raffleRule.queryAwardRuleWeightByActivityId(request.getActivityId());

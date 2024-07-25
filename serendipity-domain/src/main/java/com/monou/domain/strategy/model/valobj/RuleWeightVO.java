@@ -40,7 +40,13 @@ public class RuleWeightVO {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Award {
+        /**
+         * 奖品ID
+         */
         private Integer awardId;
+        /**
+         * 奖品标题
+         */
         private String awardTitle;
     }
 

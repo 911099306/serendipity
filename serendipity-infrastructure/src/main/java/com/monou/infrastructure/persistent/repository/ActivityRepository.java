@@ -549,11 +549,10 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public ActivityAccountEntity queryActivityAccountEntity(Long activityId, String userId) {
         // 1. 查询总账户额度
-        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(RaffleActivityAccount.builder()
-                .activityId(activityId)
-                .userId(userId)
-                .build());
+        RaffleActivityAccount requestTotal = RaffleActivityAccount.builder().activityId(activityId).userId(userId).build();
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(requestTotal);
 
+        // 用户还未参与该活动，则余额均为0
         if (raffleActivityAccount == null) {
             return ActivityAccountEntity.builder()
                     .activityId(activityId)
@@ -568,16 +567,12 @@ public class ActivityRepository implements IActivityRepository {
         }
 
         // 2. 查询月账户额度
-        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(RaffleActivityAccountMonth.builder()
-                .activityId(activityId)
-                .userId(userId)
-                .build());
+        RaffleActivityAccountMonth requestMonth = RaffleActivityAccountMonth.builder().activityId(activityId).userId(userId).build();
+        RaffleActivityAccountMonth raffleActivityAccountMonth = raffleActivityAccountMonthDao.queryActivityAccountMonthByUserId(requestMonth);
 
         // 3. 查询日账户额度
-        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(RaffleActivityAccountDay.builder()
-                .activityId(activityId)
-                .userId(userId)
-                .build());
+        RaffleActivityAccountDay requestDay = RaffleActivityAccountDay.builder().activityId(activityId).userId(userId).build();
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(requestDay);
 
         // 组装对象
         ActivityAccountEntity activityAccountEntity = new ActivityAccountEntity();
@@ -587,7 +582,7 @@ public class ActivityRepository implements IActivityRepository {
         activityAccountEntity.setTotalCountSurplus(raffleActivityAccount.getTotalCountSurplus());
 
         // 如果没有创建日账户，则从总账户中获取日总额度填充。「当新创建日账户时，会获得总账户额度」
-        if (null == raffleActivityAccountDay) {
+        if (raffleActivityAccountDay == null) {
             activityAccountEntity.setDayCount(raffleActivityAccount.getDayCount());
             activityAccountEntity.setDayCountSurplus(raffleActivityAccount.getDayCount());
         } else {
@@ -596,7 +591,7 @@ public class ActivityRepository implements IActivityRepository {
         }
 
         // 如果没有创建月账户，则从总账户中获取月总额度填充。「当新创建日账户时，会获得总账户额度」
-        if (null == raffleActivityAccountMonth) {
+        if (raffleActivityAccountMonth == null) {
             activityAccountEntity.setMonthCount(raffleActivityAccount.getMonthCount());
             activityAccountEntity.setMonthCountSurplus(raffleActivityAccount.getMonthCount());
         } else {

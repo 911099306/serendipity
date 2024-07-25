@@ -22,6 +22,11 @@ public interface IUserBehaviorRebateOrderDao {
      */
     void insert(UserBehaviorRebateOrder userBehaviorRebateOrder);
 
+    /**
+     * 查询返利记录
+     * @param userBehaviorRebateOrderReq 返利请求
+     * @return 返利记录
+     */
     @DBRouter
     List<UserBehaviorRebateOrder> queryOrderByOutBusinessNo(UserBehaviorRebateOrder userBehaviorRebateOrderReq);
 

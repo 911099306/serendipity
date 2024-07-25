@@ -398,20 +398,25 @@ public class StrategyRepository implements IStrategyRepository {
     public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
         // 优先从缓存获取
         String cacheKey = Constants.RedisKey.STRATEGY_RULE_WEIGHT_KEY + strategyId;
-        List<RuleWeightVO> ruleWeightVOS = redisService.getValue(cacheKey);
-        if (null != ruleWeightVOS) return ruleWeightVOS;
+        List<RuleWeightVO> ruleWeightVOList = redisService.getValue(cacheKey);
+        if (ruleWeightVOList != null) {
+            return ruleWeightVOList;
+        }
+        ruleWeightVOList = new ArrayList<>();
 
-        ruleWeightVOS = new ArrayList<>();
         // 1. 查询权重规则配置
         StrategyRule strategyRuleReq = new StrategyRule();
         strategyRuleReq.setStrategyId(strategyId);
         strategyRuleReq.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
+        // ruleValue = 60:102 4000:102,103,104,105 5000:102,103,104,105,106,107 6000:102,103,104,105,106,107,108
         String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRuleReq);
+
         // 2. 借助实体对象转换规则
         StrategyRuleEntity strategyRuleEntity = new StrategyRuleEntity();
         strategyRuleEntity.setRuleModel(DefaultChainFactory.LogicModel.RULE_WEIGHT.getCode());
         strategyRuleEntity.setRuleValue(ruleValue);
         Map<String, List<Integer>> ruleWeightValues = strategyRuleEntity.getRuleWeightValues();
+
         // 3. 遍历规则组装奖品配置
         Set<String> ruleWeightKeys = ruleWeightValues.keySet();
         for (String ruleWeightKey : ruleWeightKeys) {
@@ -429,7 +434,7 @@ public class StrategyRepository implements IStrategyRepository {
                         .build());
             }
 
-            ruleWeightVOS.add(RuleWeightVO.builder()
+            ruleWeightVOList.add(RuleWeightVO.builder()
                     .ruleValue(ruleValue)
                     .weight(Integer.valueOf(ruleWeightKey.split(Constants.COLON)[0]))
                     .awardIds(awardIds)
@@ -438,9 +443,9 @@ public class StrategyRepository implements IStrategyRepository {
         }
 
         // 设置缓存 - 实际场景中，这类数据，可以在活动下架的时候统一清空缓存。
-        redisService.setValue(cacheKey, ruleWeightVOS);
+        redisService.setValue(cacheKey, ruleWeightVOList);
 
-        return ruleWeightVOS;
+        return ruleWeightVOList;
     }
 
 }

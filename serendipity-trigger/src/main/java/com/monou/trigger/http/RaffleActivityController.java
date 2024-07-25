@@ -275,19 +275,16 @@ public class RaffleActivityController implements IRaffleActivityService {
         try {
             log.info("查询用户活动账户开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
             // 1. 参数校验
-            if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
+            if (StringUtils.isBlank(request.getUserId()) || request.getActivityId() == null) {
                 throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
             }
+            // 调用查询账户额度
             ActivityAccountEntity activityAccountEntity = raffleActivityAccountQuotaService.queryActivityAccountEntity(request.getActivityId(), request.getUserId());
-            UserActivityAccountResponseDTO userActivityAccountResponseDTO = UserActivityAccountResponseDTO.builder()
-                    .totalCount(activityAccountEntity.getTotalCount())
-                    .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())
-                    .dayCount(activityAccountEntity.getDayCount())
-                    .dayCountSurplus(activityAccountEntity.getDayCountSurplus())
-                    .monthCount(activityAccountEntity.getMonthCount())
-                    .monthCountSurplus(activityAccountEntity.getMonthCountSurplus())
-                    .build();
+
+            // 封装返回对象
+            UserActivityAccountResponseDTO userActivityAccountResponseDTO = buildUserActivityAccountResponseDTO(activityAccountEntity);
             log.info("查询用户活动账户完成 userId:{} activityId:{} dto:{}", request.getUserId(), request.getActivityId(), JSON.toJSONString(userActivityAccountResponseDTO));
+
             return Response.<UserActivityAccountResponseDTO>builder()
                     .code(ResponseCode.SUCCESS.getCode())
                     .info(ResponseCode.SUCCESS.getInfo())
@@ -300,6 +297,17 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();
         }
+    }
+
+    private UserActivityAccountResponseDTO buildUserActivityAccountResponseDTO(ActivityAccountEntity activityAccountEntity) {
+        return UserActivityAccountResponseDTO.builder()
+                .totalCount(activityAccountEntity.getTotalCount())
+                .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())
+                .dayCount(activityAccountEntity.getDayCount())
+                .dayCountSurplus(activityAccountEntity.getDayCountSurplus())
+                .monthCount(activityAccountEntity.getMonthCount())
+                .monthCountSurplus(activityAccountEntity.getMonthCountSurplus())
+                .build();
     }
 
 
