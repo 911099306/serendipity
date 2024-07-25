@@ -72,6 +72,12 @@ public enum ResponseCode {
      */
     ACTIVITY_ORDER_ERROR("ERR_BIZ_009", "用户抽奖单已使用过，不可重复抽奖"),
 
+    /**
+     * award_config 配置不是一个范围值，如 1,100
+     */
+    AWARD_CONFIG_ERROR("ERR_CONFIG_001", "award_config 配置不是一个范围值，如 1,100"),
+
+
     ;
 
     private String code;

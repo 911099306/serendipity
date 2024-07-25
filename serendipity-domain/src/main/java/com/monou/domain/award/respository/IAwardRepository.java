@@ -1,5 +1,6 @@
 package com.monou.domain.award.respository;
 
+import com.monou.domain.award.model.aggregate.GiveOutPrizesAggregate;
 import com.monou.domain.award.model.aggregate.UserAwardRecordAggregate;
 
 /**
@@ -15,5 +16,11 @@ public interface IAwardRepository {
      * @param userAwardRecordAggregate 用户抽奖记录
      */
     void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate);
+
+    String queryAwardConfig(Integer awardId);
+
+    void saveGiveOutPrizesAggregate(GiveOutPrizesAggregate giveOutPrizesAggregate);
+
+    String queryAwardKey(Integer awardId);
 
 }
