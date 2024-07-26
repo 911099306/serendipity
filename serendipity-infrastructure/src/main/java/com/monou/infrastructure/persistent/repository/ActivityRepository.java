@@ -20,6 +20,7 @@ import com.monou.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -126,7 +127,10 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void doSaveOrder(CreateQuotaOrderAggregate createOrderAggregate) {
+        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + createOrderAggregate.getUserId() + Constants.UNDERLINE + createOrderAggregate.getActivityId());
+
         try {
+            lock.lock(3, TimeUnit.SECONDS);
             // 订单对象
             ActivityOrderEntity activityOrderEntity = createOrderAggregate.getActivityOrderEntity();
             RaffleActivityOrder raffleActivityOrder = buildRaffleActivityOrder(createOrderAggregate, activityOrderEntity);
@@ -148,10 +152,11 @@ public class ActivityRepository implements IActivityRepository {
                     // 1. 写入订单
                     raffleActivityOrderDao.insert(raffleActivityOrder);
                     // 2. 更新账户 - 总，返回值为0，更新失败，数据库中无此条数据
-                    int count = raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
-                    // 3. 创建账户 - 更新为0，则账户不存在，创新新账户
-                    if (count == 0) {
+                    RaffleActivityAccount raffleActivityAccountRes = raffleActivityAccountDao.queryAccountByUserId(raffleActivityAccount);
+                    if (null == raffleActivityAccountRes) {
                         raffleActivityAccountDao.insert(raffleActivityAccount);
+                    } else {
+                        raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
                     }
                     // 4. 更新账户 - 月
                     raffleActivityAccountMonthDao.addAccountQuota(raffleActivityAccountMonth);
@@ -167,6 +172,7 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
+            lock.unlock();
         }
     }
 
