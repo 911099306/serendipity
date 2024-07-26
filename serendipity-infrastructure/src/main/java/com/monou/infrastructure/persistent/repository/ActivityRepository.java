@@ -153,7 +153,7 @@ public class ActivityRepository implements IActivityRepository {
                     raffleActivityOrderDao.insert(raffleActivityOrder);
                     // 2. 更新账户 - 总，返回值为0，更新失败，数据库中无此条数据
                     RaffleActivityAccount raffleActivityAccountRes = raffleActivityAccountDao.queryAccountByUserId(raffleActivityAccount);
-                    if (null == raffleActivityAccountRes) {
+                    if (raffleActivityAccountRes == null) {
                         raffleActivityAccountDao.insert(raffleActivityAccount);
                     } else {
                         raffleActivityAccountDao.updateAccountQuota(raffleActivityAccount);
