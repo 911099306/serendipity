@@ -31,6 +31,7 @@ import com.monou.types.model.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -49,6 +50,7 @@ import java.util.List;
  **/
 @Slf4j
 @RestController()
+@DubboService(version = "1.0")
 @CrossOrigin("${app.config.cross-origin}")
 @RequestMapping("/api/${app.config.api-version}/raffle/activity/")
 public class RaffleActivityController implements IRaffleActivityService {

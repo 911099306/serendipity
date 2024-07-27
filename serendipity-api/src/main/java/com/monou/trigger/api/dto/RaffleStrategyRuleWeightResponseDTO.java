@@ -2,6 +2,7 @@ package com.monou.trigger.api.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
  * @date 2024-07-25 00:19
  **/
 @Data
-public class RaffleStrategyRuleWeightResponseDTO {
+public class RaffleStrategyRuleWeightResponseDTO implements Serializable {
 
     /**
      * 权重规则配置的抽奖次数

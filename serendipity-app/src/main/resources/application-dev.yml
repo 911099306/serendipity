@@ -56,8 +56,8 @@ mini-db-router:
       list: db01,db02
       db00:
         driver-class-name: com.mysql.cj.jdbc.Driver
-#        url: jdbc:mysql://124.220.78.148:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        url: jdbc:mysql://127.0.0.1:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://124.220.78.148:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+#        url: jdbc:mysql://127.0.0.1:13306/big_market?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -72,8 +72,8 @@ mini-db-router:
           connection-test-query: SELECT 1
       db01:
         driver-class-name: com.mysql.cj.jdbc.Driver
-#        url: jdbc:mysql://124.220.78.148:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        url: jdbc:mysql://127.0.0.1:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://124.220.78.148:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+#        url: jdbc:mysql://127.0.0.1:13306/big_market_01?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -88,8 +88,8 @@ mini-db-router:
           connection-test-query: SELECT 1
       db02:
         driver-class-name: com.mysql.cj.jdbc.Driver
-#        url: jdbc:mysql://124.220.78.148:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
-        url: jdbc:mysql://127.0.0.1:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+        url: jdbc:mysql://124.220.78.148:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+#        url: jdbc:mysql://127.0.0.1:13306/big_market_02?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
         username: root
         password: 123456
         type-class-name: com.zaxxer.hikari.HikariDataSource
@@ -125,6 +125,19 @@ redis:
       retry-interval: 1000
       ping-interval: 60000
       keep-alive: true
+
+dubbo:
+  application:
+    name: serendipity
+    version: 1.0
+  registry:
+    id: nacos-registry
+    address: nacos://124.220.78.148:8848
+  protocol:
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: com.serendipity.trigger.api
 
 # 日志
 logging:

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Serendipity
  * @description 抽奖请求参数
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RaffleStrategyRequestDTO {
+public class RaffleStrategyRequestDTO implements Serializable {
 
     /**
      * 抽奖策略ID

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Serendipity
  * @description 抽奖奖品列表中每一个奖品得属性，响应对象
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RaffleAwardListResponseDTO {
+public class RaffleAwardListResponseDTO implements Serializable {
 
     /**
      * 奖品ID
