@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.AnnotatedArrayType;
 import java.math.BigDecimal;
 
 /**

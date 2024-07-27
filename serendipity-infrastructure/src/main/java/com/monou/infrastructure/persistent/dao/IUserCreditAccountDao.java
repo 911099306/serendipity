@@ -15,6 +15,12 @@ public interface IUserCreditAccountDao {
 
     int updateAddAmount(UserCreditAccount userCreditAccountReq);
 
+    /**
+     * 查询用户积分制
+     *
+     * @param userCreditAccountReq 请求信息
+     * @return 用户积分信息
+     */
     UserCreditAccount queryUserCreditAccount(UserCreditAccount userCreditAccountReq);
 
 

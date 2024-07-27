@@ -48,4 +48,15 @@ public interface IRaffleActivityOrderDao {
     int updateOrderCompleted(RaffleActivityOrder raffleActivityOrderReq);
 
 
+    /**
+     * 查询未支付订单「一个月以内的未支付订单」
+     *
+     * @param raffleActivityOrderReq 订单标识
+     * @return 未支付订单
+     */
+    @DBRouter
+    RaffleActivityOrder queryUnpaidActivityOrder(RaffleActivityOrder raffleActivityOrderReq);
+
+
+
 }

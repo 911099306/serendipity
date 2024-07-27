@@ -187,5 +187,19 @@ public interface IActivityRepository {
      */
     void updateOrder(DeliveryOrderEntity deliveryOrderEntity);
 
+    /**
+     * 查询未支付订单「一个月以内的未支付订单」
+     *
+     * @param skuRechargeEntity 订单标识
+     * @return 未支付订单
+     */
+    UnpaidActivityOrderEntity queryUnpaidActivityOrder(SkuRechargeEntity skuRechargeEntity);
+
+    /**
+     * 查询当前活动ID下，创建的 sku 商品
+     * @param activityId 活动ID
+     * @return sku商品集合
+     */
+    List<SkuProductEntity> querySkuProductEntityListByActivityId(Long activityId);
 
 }

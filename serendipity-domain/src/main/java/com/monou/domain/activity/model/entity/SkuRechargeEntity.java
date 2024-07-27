@@ -1,7 +1,10 @@
 package com.monou.domain.activity.model.entity;
 
 import com.monou.domain.activity.model.objval.OrderTradeTypeVO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Serendipity
@@ -9,6 +12,9 @@ import lombok.Data;
  * @date 2024-07-15 22:52
  **/
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class SkuRechargeEntity {
 
     /**
