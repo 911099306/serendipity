@@ -1,5 +1,6 @@
 package com.monou.infrastructure.persistent.po;
 
+import com.monou.domain.credit.model.entity.CreditOrderEntity;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -50,5 +51,16 @@ public class UserCreditOrder {
      */
     private Date updateTime;
 
+
+    public static UserCreditOrder buildUserCreditOrder(String userId, String orderId, String tradeName, String tradeType, BigDecimal tradeAmount, String outBusinessNo) {
+        UserCreditOrder userCreditOrderReq = new UserCreditOrder();
+        userCreditOrderReq.setUserId(userId);
+        userCreditOrderReq.setOrderId(orderId);
+        userCreditOrderReq.setTradeName(tradeName);
+        userCreditOrderReq.setTradeType(tradeType);
+        userCreditOrderReq.setTradeAmount(tradeAmount);
+        userCreditOrderReq.setOutBusinessNo(outBusinessNo);
+        return userCreditOrderReq;
+    }
 }
 

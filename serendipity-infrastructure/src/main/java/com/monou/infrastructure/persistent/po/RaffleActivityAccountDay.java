@@ -59,6 +59,16 @@ public class RaffleActivityAccountDay {
         return dateFormatDay.format(new Date());
     }
 
+    public static RaffleActivityAccountDay buildRaffleActivityAccountDay(String userId, Long activityId, String currentDay, Integer dayCount, Integer dayCountSurplus) {
+        RaffleActivityAccountDay raffleActivityAccountDay = new RaffleActivityAccountDay();
+        raffleActivityAccountDay.setUserId(userId);
+        raffleActivityAccountDay.setActivityId(activityId);
+        raffleActivityAccountDay.setDay(currentDay);
+        raffleActivityAccountDay.setDayCount(dayCount);
+        raffleActivityAccountDay.setDayCountSurplus(dayCountSurplus);
+        return raffleActivityAccountDay;
+    }
+
 }
 
 

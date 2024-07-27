@@ -59,5 +59,15 @@ public class RaffleActivityAccountMonth {
         return dateFormatMonth.format(new Date());
     }
 
+    public static RaffleActivityAccountMonth buildRaffleActivityAccountMouth(String userId, Long activityId, String currentMonth, Integer monthCount, Integer monthCountSurplus) {
+        RaffleActivityAccountMonth raffleActivityAccountMonth = new RaffleActivityAccountMonth();
+        raffleActivityAccountMonth.setUserId(userId);
+        raffleActivityAccountMonth.setActivityId(activityId);
+        raffleActivityAccountMonth.setMonth(currentMonth);
+        raffleActivityAccountMonth.setMonthCount(monthCount);
+        raffleActivityAccountMonth.setMonthCountSurplus(monthCountSurplus);
+        return raffleActivityAccountMonth;
+    }
+
 
 }

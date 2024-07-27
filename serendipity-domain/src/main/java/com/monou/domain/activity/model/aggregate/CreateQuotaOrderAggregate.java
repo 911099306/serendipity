@@ -1,6 +1,7 @@
 package com.monou.domain.activity.model.aggregate;
 
 import com.monou.domain.activity.model.entity.ActivityOrderEntity;
+import com.monou.domain.activity.model.objval.OrderStateVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,5 +47,9 @@ public class CreateQuotaOrderAggregate {
      * 活动订单实体
      */
     private ActivityOrderEntity activityOrderEntity;
+
+    public void setOrderState(OrderStateVO orderState) {
+        this.activityOrderEntity.setState(orderState);
+    }
 
 }

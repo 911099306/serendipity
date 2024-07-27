@@ -73,4 +73,20 @@ public class RaffleActivityAccount {
      */
     private Date updateTime;
 
+
+
+    public static RaffleActivityAccount buildRaffleActivityAccountTotal(String userId, Long activityId, Integer totalCount, Integer totalCountSurplus, Integer dayCount, Integer dayCountSurplus, Integer mouCount, Integer monthCountSurplus) {
+
+        RaffleActivityAccount raffleActivityAccount = new RaffleActivityAccount();
+        raffleActivityAccount.setUserId(userId);
+        raffleActivityAccount.setActivityId(activityId);
+        raffleActivityAccount.setTotalCount(totalCount);
+        raffleActivityAccount.setTotalCountSurplus(totalCountSurplus);
+        raffleActivityAccount.setDayCount(dayCount);
+        raffleActivityAccount.setDayCountSurplus(dayCountSurplus);
+        raffleActivityAccount.setMonthCount(mouCount);
+        raffleActivityAccount.setMonthCountSurplus(monthCountSurplus);
+        return raffleActivityAccount;
+    }
+
 }

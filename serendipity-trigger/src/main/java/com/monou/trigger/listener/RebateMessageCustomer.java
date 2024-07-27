@@ -3,6 +3,7 @@ package com.monou.trigger.listener;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.monou.domain.activity.model.entity.SkuRechargeEntity;
+import com.monou.domain.activity.model.objval.OrderTradeTypeVO;
 import com.monou.domain.activity.service.IRaffleActivityAccountQuotaService;
 import com.monou.domain.credit.model.entity.TradeEntity;
 import com.monou.domain.credit.model.valobj.TradeNameVO;
@@ -87,6 +88,7 @@ public class RebateMessageCustomer {
         skuRechargeEntity.setUserId(rebateMessage.getUserId());
         skuRechargeEntity.setSku(Long.valueOf(rebateMessage.getRebateConfig()));
         skuRechargeEntity.setOutBusinessNo(rebateMessage.getBizId());
+        skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.rebate_no_pay_trade);
         return skuRechargeEntity;
     }
 

@@ -1,9 +1,6 @@
 package com.monou.domain.activity.service;
 
-import com.monou.domain.activity.model.entity.ActivityAccountEntity;
-import com.monou.domain.activity.model.entity.ActivityOrderEntity;
-import com.monou.domain.activity.model.entity.ActivityShopCartEntity;
-import com.monou.domain.activity.model.entity.SkuRechargeEntity;
+import com.monou.domain.activity.model.entity.*;
 
 /**
  * @author Serendipity
@@ -13,7 +10,6 @@ import com.monou.domain.activity.model.entity.SkuRechargeEntity;
 public interface IRaffleActivityAccountQuotaService {
 
 
-    ActivityOrderEntity createRaffleActivityOrder(ActivityShopCartEntity activityShopCartEntity);
 
     /**
      * 创建 sku 账户充值订单，给用户增加抽奖次数
@@ -25,6 +21,15 @@ public interface IRaffleActivityAccountQuotaService {
      * @return 活动ID
      */
     String createOrder(SkuRechargeEntity skuRechargeEntity);
+
+
+    /**
+     * 订单出货 / 更新订单 - 积分充值
+     *
+     * @param deliveryOrderEntity 出货单实体对象
+     */
+    void updateOrder(DeliveryOrderEntity deliveryOrderEntity);
+
 
     /**
      * 查询活动账户 - 总，参与次数
