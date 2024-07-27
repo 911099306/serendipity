@@ -14,7 +14,7 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="queryStrategyRuleList" resultMap="dataMap">
+    <select id="queryStrategyRuleList" parameterType="com.monou.infrastructure.persistent.po.StrategyRule" resultMap="dataMap">
         select strategy_id
         from strategy_rule
         limit 10

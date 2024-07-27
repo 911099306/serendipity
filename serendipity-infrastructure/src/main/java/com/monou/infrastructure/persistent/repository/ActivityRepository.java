@@ -26,6 +26,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,6 +57,8 @@ public class ActivityRepository implements IActivityRepository {
     private IRaffleActivityAccountMonthDao raffleActivityAccountMonthDao;
     @Resource
     private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
+    @Resource
+    private IUserCreditAccountDao userCreditAccountDao;
     @Resource
     private TransactionTemplate transactionTemplate;
     @Resource
@@ -614,7 +617,7 @@ public class ActivityRepository implements IActivityRepository {
 
     @Override
     public void updateOrder(DeliveryOrderEntity deliveryOrderEntity) {
-        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_UPDATE_LOCK + deliveryOrderEntity.getUserId());
+        RLock lock = redisService.getLock(Constants.RedisKey.ACTIVITY_ACCOUNT_UPDATE_LOCK + deliveryOrderEntity.getUserId() + Constants.UNDERLINE + deliveryOrderEntity.getOutBusinessNo());
         try {
             lock.lock(3, TimeUnit.SECONDS);
 
@@ -625,6 +628,12 @@ public class ActivityRepository implements IActivityRepository {
             // 查询订单
             RaffleActivityOrder raffleActivityOrderRes = raffleActivityOrderDao.queryRaffleActivityOrder(raffleActivityOrderReq);
 
+            if (raffleActivityOrderRes == null) {
+                if (lock.isLocked()) {
+                    lock.unlock();
+                }
+                return;
+            }
             // 账户对象 - 总
             RaffleActivityAccount raffleActivityAccount = RaffleActivityAccount.buildRaffleActivityAccountTotal(raffleActivityOrderRes.getUserId(), raffleActivityOrderRes.getActivityId(), raffleActivityOrderRes.getTotalCount(), raffleActivityOrderRes.getTotalCount(), raffleActivityOrderRes.getDayCount(), raffleActivityOrderRes.getDayCount(), raffleActivityOrderRes.getMonthCount(), raffleActivityOrderRes.getMonthCount());
 
@@ -667,7 +676,9 @@ public class ActivityRepository implements IActivityRepository {
             });
         } finally {
             dbRouter.clear();
-            lock.unlock();
+            if (lock.isLocked()) {
+                lock.unlock();
+            }
         }
     }
 
@@ -719,5 +730,21 @@ public class ActivityRepository implements IActivityRepository {
         return skuProductEntities;
     }
 
+
+    @Override
+    public BigDecimal queryUserCreditAccountAmount(String userId) {
+        try {
+            dbRouter.doRouter(userId);
+            UserCreditAccount userCreditAccountReq = new UserCreditAccount();
+            userCreditAccountReq.setUserId(userId);
+            UserCreditAccount userCreditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
+            if (userCreditAccount == null) {
+                return BigDecimal.ZERO;
+            }
+            return userCreditAccount.getAvailableAmount();
+        } finally {
+            dbRouter.clear();
+        }
+    }
 
 }

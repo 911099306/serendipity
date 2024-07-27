@@ -57,7 +57,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
      * @return 装配成功
      */
     @Override
-    @RequestMapping(value = "strategy_armory", method = RequestMethod.GET)
+    @GetMapping(value = "strategy_armory")
     public Response<Boolean> strategyArmory(@RequestParam Long strategyId) {
 
         try {
@@ -87,8 +87,8 @@ public class RaffleStrategyController implements IRaffleStrategyService {
      * @param request 抽奖奖品列表查询请求参数 {"strategyId":1000001}
      * @return 抽奖奖品列表
      */
-    @RequestMapping(value = "query_raffle_award_list", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "query_raffle_award_list")
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
         try {
             log.info("查询抽奖奖品列表配开始 userId:{} activityId：{}", request.getUserId(), request.getActivityId());
@@ -158,9 +158,8 @@ public class RaffleStrategyController implements IRaffleStrategyService {
      * "activityId": 100301
      * }'
      */
-
-    @RequestMapping(value = "query_raffle_strategy_rule_weight", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "query_raffle_strategy_rule_weight")
     public Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(@RequestBody RaffleStrategyRuleWeightRequestDTO request) {
         try {
             log.info("查询抽奖策略权重规则配置开始 userId:{} activityId：{}", request.getUserId(), request.getActivityId());
@@ -216,7 +215,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
      * @return 抽奖结果
      */
     @Override
-    @RequestMapping(value = "random_raffle", method = RequestMethod.POST)
+    @PostMapping(value = "random_raffle")
     public Response<RaffleStrategyResponseDTO> randomRaffle(@RequestBody RaffleStrategyRequestDTO request) {
 
         try {

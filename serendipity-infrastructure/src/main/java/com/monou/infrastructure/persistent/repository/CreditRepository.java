@@ -2,6 +2,7 @@ package com.monou.infrastructure.persistent.repository;
 
 import cn.bugstack.middleware.db.router.strategy.IDBRouterStrategy;
 import com.alibaba.fastjson.JSON;
+import com.monou.domain.award.model.valobj.AccountStatusVO;
 import com.monou.domain.credit.model.aggregate.TradeAggregate;
 import com.monou.domain.credit.model.entity.CreditAccountEntity;
 import com.monou.domain.credit.model.entity.CreditOrderEntity;
@@ -16,6 +17,8 @@ import com.monou.infrastructure.persistent.po.UserCreditAccount;
 import com.monou.infrastructure.persistent.po.UserCreditOrder;
 import com.monou.infrastructure.persistent.redis.IRedisService;
 import com.monou.types.common.Constants;
+import com.monou.types.enums.ResponseCode;
+import com.monou.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
@@ -87,7 +90,16 @@ public class CreditRepository implements ICreditRepository {
                     if (userCreditAccount == null) {
                         userCreditAccountDao.insert(userCreditAccountReq);
                     } else {
-                        userCreditAccountDao.updateAddAmount(userCreditAccountReq);
+                        BigDecimal availableAmount = userCreditAccountReq.getAvailableAmount();
+                        if (availableAmount.compareTo(BigDecimal.ZERO) >= 0) {
+                            userCreditAccountDao.updateAddAmount(userCreditAccountReq);
+                        } else {
+                            int subtractionCount = userCreditAccountDao.updateSubtractionAmount(userCreditAccountReq);
+                            if (1 != subtractionCount) {
+                                status.setRollbackOnly();
+                                throw new AppException(ResponseCode.USER_CREDIT_ACCOUNT_NO_AVAILABLE_AMOUNT.getCode(), ResponseCode.USER_CREDIT_ACCOUNT_NO_AVAILABLE_AMOUNT.getInfo());
+                            }
+                        }
                     }
                     // 2. 保存账户订单
                     userCreditOrderDao.insert(userCreditOrderReq);
@@ -104,7 +116,9 @@ public class CreditRepository implements ICreditRepository {
             });
         } finally {
             dbRouter.clear();
-            lock.unlock();
+            if (lock.isLocked()) {
+                lock.unlock();
+            }
         }
 
         try {
@@ -128,6 +142,7 @@ public class CreditRepository implements ICreditRepository {
         userCreditAccountReq.setTotalAmount(creditAccountEntity.getAdjustAmount());
         // 知识；仓储往上有业务语义，仓储往下到 dao 操作是没有业务语义的。所以不用在乎这块使用的字段名称，直接用持久化对象即可。
         userCreditAccountReq.setAvailableAmount(creditAccountEntity.getAdjustAmount());
+        userCreditAccountReq.setAccountStatus(AccountStatusVO.open.getCode());
         return userCreditAccountReq;
     }
 
@@ -139,7 +154,12 @@ public class CreditRepository implements ICreditRepository {
         try {
             dbRouter.doRouter(userId);
             UserCreditAccount userCreditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
-            return CreditAccountEntity.builder().userId(userId).adjustAmount(userCreditAccount.getAvailableAmount()).build();
+            BigDecimal availableAmount = BigDecimal.ZERO;
+            if (null != userCreditAccount) {
+                availableAmount = userCreditAccount.getAvailableAmount();
+            }
+            return CreditAccountEntity.builder().userId(userId).adjustAmount(availableAmount).build();
+
         } finally {
             dbRouter.clear();
         }

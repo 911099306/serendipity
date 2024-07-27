@@ -5,6 +5,7 @@ import com.monou.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import com.monou.domain.activity.model.entity.*;
 import com.monou.domain.activity.model.objval.ActivitySkuStockKeyVO;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -201,5 +202,9 @@ public interface IActivityRepository {
      * @return sku商品集合
      */
     List<SkuProductEntity> querySkuProductEntityListByActivityId(Long activityId);
+
+
+    BigDecimal queryUserCreditAccountAmount(String userId);
+
 
 }

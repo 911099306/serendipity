@@ -89,7 +89,7 @@ public class RaffleActivityController implements IRaffleActivityService {
      * --url 'http://localhost:8091/api/v1/raffle/activity/armory?activityId=100301'
      */
     @Override
-    @RequestMapping(value = "armory", method = RequestMethod.GET)
+    @GetMapping(value = "armory")
     public Response<Boolean> armory(@RequestParam Long activityId) {
         try {
             log.info("活动装配，数据预热，开始 activityId:{}", activityId);
@@ -133,7 +133,7 @@ public class RaffleActivityController implements IRaffleActivityService {
      * }'
      */
     @Override
-    @RequestMapping(value = "draw", method = RequestMethod.POST)
+    @PostMapping(value = "draw")
     public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request) {
         try {
             log.info("活动抽奖开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
@@ -195,8 +195,8 @@ public class RaffleActivityController implements IRaffleActivityService {
      * <p>
      * curl -X POST http://localhost:8091/api/v1/raffle/activity/calendar_sign_rebate -d "userId=xiaofuge" -H "Content-Type: application/x-www-form-urlencoded"
      */
-    @RequestMapping(value = "calendar_sign_rebate", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "calendar_sign_rebate")
     public Response<Boolean> calendarSignRebate(@RequestParam String userId) {
         try {
             log.info("日历签到返利开始 userId:{}", userId);
@@ -247,8 +247,8 @@ public class RaffleActivityController implements IRaffleActivityService {
      * <p>
      * curl -X POST http://localhost:8091/api/v1/raffle/activity/is_calendar_sign_rebate -d "userId=xiaofuge" -H "Content-Type: application/x-www-form-urlencoded"
      */
-    @RequestMapping(value = "is_calendar_sign_rebate", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "is_calendar_sign_rebate")
     public Response<Boolean> isCalendarSignRebate(@RequestParam String userId) {
         try {
             log.info("查询用户是否完成日历签到返利开始 userId:{}", userId);
@@ -270,6 +270,17 @@ public class RaffleActivityController implements IRaffleActivityService {
         }
     }
 
+    private UserActivityAccountResponseDTO buildUserActivityAccountResponseDTO(ActivityAccountEntity activityAccountEntity) {
+        return UserActivityAccountResponseDTO.builder()
+                .totalCount(activityAccountEntity.getTotalCount())
+                .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())
+                .dayCount(activityAccountEntity.getDayCount())
+                .dayCountSurplus(activityAccountEntity.getDayCountSurplus())
+                .monthCount(activityAccountEntity.getMonthCount())
+                .monthCountSurplus(activityAccountEntity.getMonthCountSurplus())
+                .build();
+    }
+
     /**
      * 查询账户额度
      * <p>
@@ -281,8 +292,8 @@ public class RaffleActivityController implements IRaffleActivityService {
      * "activityId": 100301
      * }'
      */
-    @RequestMapping(value = "query_user_activity_account", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "query_user_activity_account")
     public Response<UserActivityAccountResponseDTO> queryUserActivityAccount(@RequestBody UserActivityAccountRequestDTO request) {
         try {
             log.info("查询用户活动账户开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
@@ -311,18 +322,8 @@ public class RaffleActivityController implements IRaffleActivityService {
         }
     }
 
-    private UserActivityAccountResponseDTO buildUserActivityAccountResponseDTO(ActivityAccountEntity activityAccountEntity) {
-        return UserActivityAccountResponseDTO.builder()
-                .totalCount(activityAccountEntity.getTotalCount())
-                .totalCountSurplus(activityAccountEntity.getTotalCountSurplus())
-                .dayCount(activityAccountEntity.getDayCount())
-                .dayCountSurplus(activityAccountEntity.getDayCountSurplus())
-                .monthCount(activityAccountEntity.getMonthCount())
-                .monthCountSurplus(activityAccountEntity.getMonthCountSurplus())
-                .build();
-    }
-
     @Override
+    @PostMapping(value = "query_sku_product_list_by_activity_id")
     public Response<List<SkuProductResponseDTO>> querySkuProductListByActivityId(Long activityId) {
         try {
             log.info("查询sku商品集合开始 activityId:{}", activityId);
@@ -363,6 +364,7 @@ public class RaffleActivityController implements IRaffleActivityService {
     }
 
     @Override
+    @PostMapping(value = "query_user_credit_account")
     public Response<BigDecimal> queryUserCreditAccount(String userId) {
         try {
             log.info("查询用户积分值开始 userId:{}", userId);
@@ -382,9 +384,8 @@ public class RaffleActivityController implements IRaffleActivityService {
         }
     }
 
-
-    @RequestMapping(value = "credit_pay_exchange_sku", method = RequestMethod.POST)
     @Override
+    @PostMapping(value = "credit_pay_exchange_sku")
     public Response<Boolean> creditPayExchangeSku(@RequestBody SkuProductShopCartRequestDTO request) {
         try {
             log.info("积分兑换商品开始 userId:{} sku:{}", request.getUserId(), request.getSku());
@@ -413,7 +414,13 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(ResponseCode.SUCCESS.getInfo())
                     .data(true)
                     .build();
-        } catch (Exception e) {
+        }catch (AppException e) {
+            log.error("积分兑换商品失败 userId:{} activityId:{}",  request.getUserId(), request.getSku(), e);
+            return Response.<Boolean>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        }  catch (Exception e) {
             log.error("积分兑换商品失败 userId:{} sku:{}", request.getUserId(), request.getSku(), e);
             return Response.<Boolean>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
