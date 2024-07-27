@@ -57,6 +57,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
 
         // 校验: 活动日期
         if ( activityEntity.getBeginDateTime().after(currentDate) || activityEntity.getEndDateTime().before(currentDate)) {
+            log.error("创建活动抽奖单失败，活动时间未开始 activityId:{} state:{}", activityId, activityEntity.getState());
             throw new AppException(ResponseCode.ACTIVITY_DATE_ERROR.getCode(), ResponseCode.ACTIVITY_DATE_ERROR.getInfo());
         }
 
