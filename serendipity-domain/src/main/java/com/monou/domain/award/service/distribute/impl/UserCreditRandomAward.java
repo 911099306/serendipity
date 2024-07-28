@@ -8,6 +8,7 @@ import com.monou.domain.award.model.valobj.AwardStateVO;
 import com.monou.domain.award.respository.IAwardRepository;
 import com.monou.domain.award.service.distribute.IDistributeAward;
 import com.monou.types.common.Constants;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +21,7 @@ import java.math.MathContext;
  * @description 用户积分奖品，支持 award_config 透传，满足黑名单积分奖励。
  * @date 2024-07-26 00:04
  */
+@Slf4j
 @Component("user_credit_random")
 public class UserCreditRandomAward implements IDistributeAward {
 
@@ -64,7 +66,9 @@ public class UserCreditRandomAward implements IDistributeAward {
     }
 
     private BigDecimal generateRandom(BigDecimal min, BigDecimal max) {
-        if (min.equals(max)) return min;
+        if (min.equals(max)) {
+            return min;
+        }
         BigDecimal randomBigDecimal = min.add(BigDecimal.valueOf(Math.random()).multiply(max.subtract(min)));
         return randomBigDecimal.round(new MathContext(3));
     }
